@@ -3,7 +3,7 @@ I like to create "living like" digitals creatures. Creatures that reacts to the 
 Visualy, it will look like a primitive system of mathematical planktons. Hundreds of little creatures will follow some basic coordinates. For example, if a head appear in the field of the webcam, they will find a fair distribution of the contour and place themselves in a tangeant line of their portion. 
 They will also react to the ambiant sound, their shape and color (and behavior?) being influenced by some incoming audio parameters. 
 If it's possible, I am wondering if I could make the planktons proceduraly. 
-Additionnaly to all this, the universe will also adapt to what it sees. Using a memory, I would like the system to remember it's previous positions / states / inputs and recreate this memory when no one is around, or change it's behaviors when someone is looking at it.  
+Additionnaly to all this, the universe will also adapt to what it sees. Using a memory, I would like the system to remember it's previous positions / states / inputs and play with this memory when no one is around, or change it's behaviors when someone is looking at it.  
 
 Inspirations:
 Zach Lieberman (https://www.instagram.com/zach.lieberman/)
@@ -26,7 +26,9 @@ I will use a basic particles system in which I will add a behavioral aspect that
   - Every plankton is an object generated randomly. It contains a core (a main line), a head and 2..8 legs.
   - Every Plankton receive a coordinate toward what it will move, and rotate in position. The core might follow 2 remarquables points (peak points of a curve in the loop) and keep this position until the shape is going out of the frame. 
   - The incoming sound from the microphone will influence some of the plankton parameter. 
-All of those parameters will be   
+  - It might be fun to include semantic analysis like speech to text. 
+  
+
 
 
 
