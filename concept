@@ -1,10 +1,32 @@
 The concept:
 I like to create "living like" digitals creatures. Creatures that reacts to the incoming data from the infinite world, the human world, our world. Their purpose is to try to communicate with this world by immitating what they see. 
-Visualy, it will look like a primitive system of mathematical planctons. Hundreds of little creatures will follow some basic coordinates. For example, if a head appear in the field of the webcam, they will find a fair distribution of the contour and place themselves in a tangeant line of their portion. 
+Visualy, it will look like a primitive system of mathematical planktons. Hundreds of little creatures will follow some basic coordinates. For example, if a head appear in the field of the webcam, they will find a fair distribution of the contour and place themselves in a tangeant line of their portion. 
 They will also react to the ambiant sound, their shape and color (and behavior?) being influenced by some incoming audio parameters. 
+If it's possible, I am wondering if I could make the planktons proceduraly. 
+Additionnaly to all this, the universe will also adapt to what it sees. Using a memory, I would like the system to remember it's previous positions / states / inputs and recreate this memory when no one is around, or change it's behaviors when someone is looking at it.  
 
 Inspirations:
 Zach Lieberman (https://www.instagram.com/zach.lieberman/)
-I'm really inspired by Zach Lieberman, a creative coder from New York who is also a coach in the SFPC in Manhattan. On his instagram account, he submit almost everyday a new application of creative coding, often playing with computer vision. 
+I'm inspired by Zach Lieberman, a creative coder from New York who is also a coach in the SFPC in Manhattan. On his instagram account, he submit almost everyday a new application of creative coding, often playing with computer vision.
+
+Every game or creation involving procedural generated creatures. 
+
+Similar works by other artists:
+
+project scope: 
+This project will probably shrink with time. As I go forward, I intend to keep track of the deadline and simplify my objectives. 
+
+How to compute?
+I will use a basic particles system in which I will add a behavioral aspect that will interract with the contour detection program. 
+- Contour detection: I will make a classic contour detection system.
+  - (Very roughly) From a webcam, frame n and n-1 will be compared and the difference will be the movement in the field of view.
+  - Idealy, I want only the foreground to be detected. So webcam shall only look at a wall or some flat and static surface when there is no one in front of it. 
+  - The contour of the movement will be considered as an abject (a blob) and this object will be sent to a container. An algorithm will manage them.
+- Every particle is a plankton
+  - Every plankton is an object generated randomly. It contains a core (a main line), a head and 2..8 legs.
+  - Every Plankton receive a coordinate toward what it will move, and rotate in position. The core might follow 2 remarquables points (peak points of a curve in the loop) and keep this position until the shape is going out of the frame. 
+  - The incoming sound from the microphone will influence some of the plankton parameter. 
+All of those parameters will be   
+
 
 
