@@ -37,6 +37,8 @@ class Face {
   
   Face() {}
   
+  
+  // Will attract particles
   PVector attract(Particle p, float w, float h) {
     
     // Attraction's position
@@ -63,6 +65,8 @@ class Face {
 
   // parse an OSC message from FaceOSC
   // returns true if a message was handled
+  
+  // Also, mapping all coordinates to fit the sketch: FaceOSC sketch being 640x480 (too small)
   boolean parseOSC(OscMessage m) {
     
     if(m.checkAddrPattern("/found")) {

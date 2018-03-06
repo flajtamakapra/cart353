@@ -1,5 +1,19 @@
+/*
+Jeremie Desmarais
+Particles reacting to Computer Vision:
+Face detection and contour tracing. 
 
+1st version need to be runned with FaceOSC 
+Receiving face details via OSC. 
+
+
+*/
+
+
+// OSC library
 import oscP5.*;
+
+// Sound lib
 import ddf.minim.*;
 
 OscP5 oscP5;
@@ -69,6 +83,8 @@ void draw() {
     secondesParticules.get(i).display();   
   }
   
+  
+  // A switch to enable / disable searching - for the presentation
   if(searching){
     // If receiving data from FaceOSC
   if(face.found > 0) {
@@ -77,7 +93,7 @@ void draw() {
     noFill();
     stroke(255);
 
-    // Iterate trough the first particles array, usefull to keep the proportions correctly.
+    // Iterate trough all the particles arrays, usefull to keep the proportions correctly.
     int iterateur = 0;
     for(int i = 0; i < portionBouche ; i++){
       
@@ -121,7 +137,7 @@ void draw() {
   
     
    
-
+    // take some particles and make them move with AudioInput
       for(int i = 0 ; i < in.bufferSize() ; i++) {
         int max = in.bufferSize();
         int min = particules.size();

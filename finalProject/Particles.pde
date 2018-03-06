@@ -1,7 +1,7 @@
 
 /*
 
-
+Just a simple particle system. 
 
 */
 
@@ -46,9 +46,8 @@ class Particle {
   }
 
 	void display() {
-// Shape drawing
-
-
+    
+    // Shape drawing
     float angle = random(PI*2);
     float angleStep = 360.0/numPoints;
     fill(partColor);
