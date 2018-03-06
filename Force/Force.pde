@@ -22,7 +22,7 @@ ArrayList<Particle> particules = new ArrayList<Particle>();
 ArrayList<Accelerator> accelerateurs = new ArrayList<Accelerator>();
 
 
-int maxParts = 100;
+int maxParts = 1000;
 //int now = 0;
 //int monde;
 
@@ -30,7 +30,7 @@ int maxParts = 100;
 
 void setup() {
 	size(1920, 1080);
-  //fullScreen();
+ // fullScreen();
 	frameRate(320);
   
   // Initiate the kernel
