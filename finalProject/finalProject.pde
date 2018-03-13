@@ -6,6 +6,9 @@ Face detection and contour tracing.
 1st version need to be runned with FaceOSC 
 Receiving face details via OSC. 
 
+A poetic look of the presence of humanity and inviduals in the virtual world as a reflection
+of itself
+
 
 */
 
@@ -43,8 +46,8 @@ boolean searching = false;
 
 
 void setup() {
-  //size(1920, 1080);
-  fullScreen();
+  size(1920, 1080);
+  //fullScreen();
   frameRate(320);
   
   // OSC receiver - from openFrameworks program
