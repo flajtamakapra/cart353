@@ -6,8 +6,14 @@ Face detection and contour tracing.
 1st version need to be runned with FaceOSC 
 Receiving face details via OSC. 
 
+Click anywhere on the screen to activate particles face tracking
+
 A poetic look of the presence of humanity and inviduals in the virtual world as a reflection
 of itself
+
+
+ -----** Update for assignment 4: Added different reactions from the particles: 
+  - On the mouth and the nostrils: There is a breathing effect, particles go out and go in.
 
 
 */
@@ -25,15 +31,22 @@ AudioInput in;
 
 
 // our FaceOSC tracked face dat
-Face face = new Face();
+//Face face = new Face();
+Face mouth = new FaceMouth();
 
 // Particles container
-ArrayList<Particle> particules = new ArrayList<Particle>();
-ArrayList<Particle> secondesParticules = new ArrayList<Particle>();
+//ArrayList<Particle> particules = new ArrayList<Particle>();
+//ArrayList<Particle> secondesParticules = new ArrayList<Particle>();
+//ArrayList<Particle> breathe = new ArrayList<Particle>();
+
+
+ParticleSystem mouthParticles, eyesParticles, nostrilsParticles, backgroundParticles;
+
 
 // All numbers
 int nbParticules = 100;
 int nbSecondesParticules = 500;
+int breatheParticules = 100;
 
 // Particles distribution (%)
 int portionOeilDroit = 15*nbParticules/100;
@@ -52,16 +65,28 @@ void setup() {
   
   // OSC receiver - from openFrameworks program
   oscP5 = new OscP5(this, 8338);
+  mouthParticles = new ParticleSystem(new PVector((int)random(width), (int)random(height)));
+  eyesParticles = new ParticleSystem(new PVector((int)random(width), (int)random(height)));
+  nostrilsParticles = new ParticleSystem(new PVector((int)random(width), (int)random(height)));
+  backgroundParticles = new ParticleSystem(new PVector((int)random(width), (int)random(height)));
   
-  // Initiate all particles
-  for(int i = 0 ; i < nbParticules ; i++){
-    PVector pPos = new PVector(random(width), random(height));
-    particules.add(new Particle((int)random(1,1.1), pPos,(int)random(100, 255)));
-   }
-  for(int i = 0 ; i < nbSecondesParticules ; i++){
-    PVector pPos = new PVector(random(width), random(height));
-    secondesParticules.add(new Particle((int)random(1,1.1), pPos, (int)random(10, 100)));
-  }
+  
+  //// Initialize all particles
+  //for(int i = 0 ; i < nbParticules ; i++){
+  //  PVector pPos = new PVector(random(width), random(height));
+  //  particules.add(new Particle((int)random(1,1.1), pPos,(int)random(100, 255)));
+  // }
+  //for(int i = 0 ; i < nbSecondesParticules ; i++){
+  //  PVector pPos = new PVector(random(width), random(height));
+  //  secondesParticules.add(new Particle((int)random(1,1.1), pPos, (int)random(10, 100)));
+  //}
+  //for(int i = 0 ; i < breatheParticules ; i++){
+  //  PVector pPos = new PVector(random(-mouth.orWidth, mouth.orWidth), random(-mouth.orHeight, mouth.orHeight));
+  //  breathe.add(new Particle((int)random(1,1.1), pPos, (int)random(10, 100)));  
+  //}
+
+    
+  
   
   // Sound response
   minim = new Minim(this);
@@ -77,89 +102,38 @@ void draw() {
   stroke(255);
 
   // Makes them move
-  for(int i = 0 ; i < particules.size() ; i++){
-    particules.get(i).update();
-    particules.get(i).display();   
-  }  
-  for(int i = 0 ; i < secondesParticules.size() ; i++){
-    secondesParticules.get(i).update();
-    secondesParticules.get(i).display();   
-  }
+  //for(int i = 0 ; i < particules.size() ; i++){
+  //  particules.get(i).update();
+  //  particules.get(i).display();   
+  //}  
+  //for(int i = 0 ; i < secondesParticules.size() ; i++){
+  //  secondesParticules.get(i).update();
+  //  secondesParticules.get(i).display();   
+  //}
   
+  PVector gravity = new PVector(0,0);
+  mouthParticles.applyForce(gravity);
+  
+
   
   // A switch to enable / disable searching - for the presentation
   if(searching){
-    // If receiving data from FaceOSC
-  if(face.found > 0) {
-    translate(face.posePosition.x, face.posePosition.y);
-    scale(face.poseScale);
-    noFill();
-    stroke(255);
-
-    // Iterate trough all the particles arrays, usefull to keep the proportions correctly.
-    int iterateur = 0;
-    for(int i = 0; i < portionBouche ; i++){
-      
-        PVector f = face.attract(particules.get(iterateur), random(-face.mouthWidth*6, face.mouthWidth*6),random(face.mouthHeight/2)+20);
-        particules.get(iterateur).applyForce(f);
-        particules.get(iterateur).update();
-        iterateur++;
-    }
-    for(int i = 0 ; i < portionOeilGauche ; i++) {
-      PVector f = face.attract(particules.get(iterateur), random(-face.eyeLeft*2, face.eyeLeft*2)-100,random(face.eyeLeft)-250);
-      particules.get(iterateur).applyForce(f);
-      particules.get(iterateur).update();
-      iterateur++;
-
-    }
-    for(int i = 0 ; i < portionOeilDroit ; i++ ) {
-      PVector f = face.attract(particules.get(iterateur), random(-face.eyeRight*2, face.eyeRight*2)+100,random(face.eyeRight)-250);
-      particules.get(iterateur).applyForce(f);
-      particules.get(iterateur).update();
-      iterateur++;    
-    }
-    for(int i = 0 ; i < portionNarineGauche ; i++ ) {
-      PVector f = face.attract(particules.get(iterateur), random(-face.nostrils*2, face.nostrils*2)-25,random(face.nostrils)-100);
-      particules.get(iterateur).applyForce(f);
-      particules.get(iterateur).update();
-      iterateur++;    
-    }
-    for(int i = 0 ; i < portionNarineDroite ; i++ ) {
-      PVector f = face.attract(particules.get(iterateur), random(-face.nostrils*2, face.nostrils*2)+25,random(face.nostrils)-100);
-      particules.get(iterateur).applyForce(f);
-      particules.get(iterateur).update();
-      iterateur++;    
-    }
-    // Apply force on second particles set
-    for(int i = 0 ; i < nbSecondesParticules ; i++) {
-      PVector f = face.attract(secondesParticules.get(i), random(-face.jaw*150, face.jaw*150),random(-face.jaw*250, face.jaw*250)-100);
-      secondesParticules.get(i).applyForce(f);
-      secondesParticules.get(i).update();
-    
-    }
-  
-    
-   
-    // take some particles and make them move with AudioInput
-      for(int i = 0 ; i < in.bufferSize() ; i++) {
-        int max = in.bufferSize();
-        int min = particules.size();
-        int mappedI = (int)map(i, 0, max, 0, min);
-        mappedI = constrain(mappedI, 0, 99);
-        particules.get(mappedI).shake((int)(in.left.get(i)*50));
-      
-      }  
-     
-  }
-    
-    
+      // If receiving data from FaceOSC
+      if(mouth.found > 0) {
+        translate(mouth.posePosition.x, mouth.posePosition.y);
+        scale(mouth.poseScale);
+        noFill();
+        stroke(255);
+        mouthParticles.applyRepeller(mouth);
+        
+        soundReaction();
+      }
   }
   
 }
-
 // OSC CALLBACK FUNCTIONS
 void oscEvent(OscMessage m) {
-  face.parseOSC(m);
+  mouth.parseOSC(m);
 }
 
 void mouseClicked() {
