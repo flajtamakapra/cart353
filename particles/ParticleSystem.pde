@@ -9,16 +9,28 @@ class ParticleSystem {
   ParticleSystem(PVector position) {
     origin = position;
     particles = new ArrayList<Particle>();
-   
   }
 
-  void addParticle(PVector pos, float dec) {
-    //particles.add(new Particle(origin));
+  ParticleSystem(int nbParticles) {
+    particles = new ArrayList<Particle>();
+    for (int i = 0; i < nbParticles; i++ ) {
+      PVector pos = new PVector(random(width), random(height));
+      particles.add(new Particle(pos, 0));
+    }
+  }
+  
+  ParticleSystem(int nbParticles, int limit) {
+    particles = new ArrayList<Particle>();
+    for (int i = 0; i < nbParticles; i++ ) {
+      PVector pos = new PVector(random(width), random(height));
+      particles.add(new Particle(pos, 0, limit));
+    }
+}
 
-    // we will spawn particles from the mouse to make it easy
-    // to check if our repellers are working
-   // particles.add(new Particle(new PVector(mouseX, mouseY)));
-   particles.add(new Particle(pos, dec));
+
+  void addParticle(PVector pos, float dec) {
+
+    particles.add(new Particle(pos, dec));
   }
 
   // A function to apply a force to all Particles
@@ -28,12 +40,16 @@ class ParticleSystem {
     }
   }
 
-  void applyRepeller(Repeller r) {
+  void applyRepeller(Force f) {
     // for each particle in this system
     for (Particle p : particles) {
-      // work out the repel force for this repeller
-      PVector force = r.repel(p);        
-      // apply that force to the particle
+      PVector force = f.repel(p);        
+      p.applyForce(force);
+    }
+  }
+  void applyForce(Force f) {
+    for (Particle p : particles) {
+      PVector force = f.attract(p);        
       p.applyForce(force);
     }
   }

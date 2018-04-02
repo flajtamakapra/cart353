@@ -1,23 +1,8 @@
-//
-// a template for receiving face tracking osc messages from
-// Kyle McDonald's FaceOSC https://github.com/kylemcdonald/ofxFaceTracker
-//
-// this example includes a class to abstract the Face data
-//
-// 2012 Dan Wilcox danomatika.com
-// for the IACD Spring 2012 class at the CMU School of Art
-//
-// adapted from from Greg Borenstein's 2011 example
-// http://www.gregborenstein.com/
-// https://gist.github.com/1603230
-//
-import oscP5.*;
-
-// a single tracked face from FaceOSC
 class Face {
   
-  // num faces found
   int found;
+
+  Face(){}
   
   // pose
   float poseScale;
@@ -36,43 +21,6 @@ class Face {
   int mass = 10;
   
 
-      // Will attract particles
-  PVector attract(Particle p, float w, float h) {
-    
-    // Attraction's position
-    PVector position = new PVector(posePosition.x+w, posePosition.y+h);
-        
-    // Force direction
-    PVector force = PVector.sub(position, p.position);
-
-    // Distance
-    float d  = force.mag();
-    d = constrain(d, 0.0, 25.0);
-
-    // Unit vector for direction
-    force.normalize();
-
-    
-    // Calcutate and Apply attraction
-    float strength = (G * mass * p.mass) / (d*d);
-    force.mult(strength);
-
-    return force;
-
-  }
-    // Calculate a force to push particle away from repeller
-  PVector repel(Particle p) {
-    
-    PVector position = new PVector(posePosition.x, posePosition.y);
-    PVector dir = PVector.sub(position, p.position);      // Calculate direction of force
-    float d = dir.mag();                       // Distance between objects
-    dir.normalize();                           // Normalize vector (distance doesn't matter here, we just want this vector for direction)
-    d = constrain(d,5,100);                    // Keep distance within a reasonable range
-    float force = -2 * G / (d * d);            // Repelling force is inversely proportional to distance
-    dir.mult(force);                           // Get force vector --> magnitude * direction
-    return dir;
-  } 
-  
 
 
   // parse an OSC message from FaceOSC
@@ -150,3 +98,4 @@ class Face {
   }
   
 };
+  

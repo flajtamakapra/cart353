@@ -10,6 +10,7 @@ class Particle {
   float lifespanDecrement;
   float numPoints;
   int outsideRadius;
+  int limit = 3;
   
   float mass = 1; // Let's do something better here!
 
@@ -22,6 +23,16 @@ class Particle {
     numPoints = (int)random(2,5);
     outsideRadius = (int)random(2,10);
   }
+  Particle(PVector l, float decrement, int newLimit) {
+    acceleration = new PVector(0,0);
+    velocity = new PVector(random(-1,1),random(-2,0));
+    position = l;
+    lifespan = random(100, 255);
+    lifespanDecrement = decrement;
+    numPoints = (int)random(2,5);
+    outsideRadius = (int)random(2,10);
+    limit = newLimit;
+  }
 
   void run() {
     update();
@@ -29,7 +40,7 @@ class Particle {
   }
 
   void applyForce(PVector force) {
-    PVector f = force.get();
+    PVector f = force;
     f.div(mass);   
     acceleration.add(f);
   }
@@ -38,6 +49,7 @@ class Particle {
   void update() {
     velocity.add(acceleration);
     position.add(velocity);
+    velocity.limit(limit);
     acceleration.mult(0);
     lifespan -= lifespanDecrement;
   }
@@ -71,5 +83,9 @@ class Particle {
     } else {
       return false;
     }
+  }
+  
+  void setLimit(int newLimit) {
+    limit = newLimit;
   }
 }
