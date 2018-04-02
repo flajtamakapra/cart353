@@ -2,9 +2,13 @@
   Particles follow the face found in the webcam
  Particles flow differently depending of the orifice "gravity"
  
+ 
+ *to do
  When sound comes vis the microphone, the mouth's particles go crazy
  
- Modified Rilla's answer to Shiffman's test. 
+ 
+ **
+ Started from the shiffmans's particlesSystem example and Rilla Khaled's modifications.
  
  
  */
